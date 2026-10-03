@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bookmark, Heart, MessageCircle } from 'lucide-react';
+import { Bookmark, HeartHandshake, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface Post {
@@ -83,11 +83,11 @@ export default function PostCard({ post, index = 0 }: PostCardProps) {
         )}
       </div>
 
-      <h3 className="mt-4 text-[15px] font-semibold text-haven-text">{post.title}</h3>
+      <h3 className="mt-4 text-[16px] font-semibold text-haven-text">{post.title}</h3>
       <div className="mt-1.5">
         <p
           className={cn(
-            'text-sm leading-[1.6] text-haven-text/90',
+            'text-[15px] leading-[1.6] text-haven-text/90',
             !expanded && 'line-clamp-3',
           )}
         >
@@ -119,7 +119,7 @@ export default function PostCard({ post, index = 0 }: PostCardProps) {
               transition={{ duration: 0.45, type: 'spring', stiffness: 320, damping: 14 }}
               className="block"
             >
-              <Heart
+              <HeartHandshake
                 size={18}
                 strokeWidth={1.75}
                 className={cn(hugged && 'fill-[#C0453B] text-[#C0453B]')}
