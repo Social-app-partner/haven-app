@@ -83,6 +83,7 @@ export default function Home() {
     () => sessionStorage.getItem(BANNER_KEY) !== '1',
   );
   const [text, setText] = useState('');
+  const [checkInNote, setCheckInNote] = useState('');
   const [chip, setChip] = useState<string | null>(null);
   const [justShared, setJustShared] = useState(false);
   const [userPosts, setUserPosts] = useState<Post[]>(loadUserPosts);
@@ -130,7 +131,7 @@ export default function Home() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="ml-2 mr-auto max-w-2xl lg:ml-6">
       {/* 1. Gentle reminder banner */}
       <AnimatePresence>
         {bannerVisible && (
@@ -143,7 +144,7 @@ export default function Home() {
           >
             <div className="flex items-start gap-3 rounded-2xl bg-haven-primary-soft p-4">
               <Leaf size={20} strokeWidth={1.75} className="mt-0.5 shrink-0 text-haven-primary" />
-              <p className="flex-1 text-sm leading-relaxed text-haven-text">
+              <p className="flex-1 text-[15px] leading-relaxed text-haven-text">
                 <span className="font-semibold">A gentle reminder:</span> This is a judgment-free
                 space. Share as much or as little as you like — you're among friends here.
               </p>
@@ -174,9 +175,10 @@ export default function Home() {
         transition={{ duration: 0.35, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className="mb-6 rounded-2xl border border-haven-border bg-white p-5 shadow-card"
       >
+        <h2 className="mb-3 text-[16px] font-semibold text-haven-text">Daily check in</h2>
         {todayMeta ? (
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm text-haven-text">
+            <p className="text-[15px] text-haven-text">
               Today you're feeling{' '}
               <span className="font-semibold" style={{ color: todayMeta.chipText }}>
                 {todayMeta.shortLabel}
@@ -186,14 +188,14 @@ export default function Home() {
             <button
               type="button"
               onClick={() => openCheckIn()}
-              className="text-sm font-medium text-haven-primary hover:text-haven-primary-hover"
+              className="text-[15px] font-medium text-haven-primary hover:text-haven-primary-hover"
             >
               edit
             </button>
           </div>
         ) : (
           <>
-            <h2 className="font-serif text-xl font-medium text-haven-text">
+            <h2 className="font-serif text-[22px] font-medium text-haven-text">
               How are you feeling today?
             </h2>
             <div className="mt-3 flex items-center gap-2">
@@ -205,7 +207,7 @@ export default function Home() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.25 + i * 0.05, type: 'spring', stiffness: 300, damping: 16 }}
                   whileHover={{ y: -3, rotate: i % 2 === 0 ? -4 : 4 }}
-                  onClick={() => openCheckIn({ initialMood: m.value })}
+                  onClick={() => openCheckIn({ initialMood: m.value, initialNote: checkInNote.trim() || undefined })}
                   aria-label={m.label}
                   title={m.label}
                   className="flex h-11 w-11 items-center justify-center rounded-full text-2xl transition-colors hover:bg-haven-canvas"
@@ -213,10 +215,18 @@ export default function Home() {
                   {m.emoji}
                 </motion.button>
               ))}
-              <span className="ml-2 text-xs text-haven-text-muted">
+              <span className="ml-2 text-[13px] text-haven-text-muted">
                 takes 10 seconds, only you can see it
               </span>
             </div>
+            <input
+              type="text"
+              value={checkInNote}
+              onChange={(e) => setCheckInNote(e.target.value.slice(0, 280))}
+              maxLength={280}
+              placeholder="Add a little note if you'd like… (optional)"
+              className="mt-3 w-full rounded-xl border border-haven-border bg-haven-canvas px-3 py-2 text-[14px] text-haven-text placeholder:text-haven-text-muted/70 focus:outline-none focus:ring-2 focus:ring-haven-primary/40"
+            />
           </>
         )}
       </motion.section>
@@ -228,6 +238,7 @@ export default function Home() {
         transition={{ duration: 0.35, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="mb-8 rounded-2xl border border-haven-border bg-white p-5 shadow-card transition-shadow duration-200 focus-within:shadow-card-hover"
       >
+        <h2 className="mb-3 text-[16px] font-semibold text-haven-text">Let it out</h2>
         <div className="flex gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#8B7BC7] text-sm font-semibold text-white">
             M
@@ -241,7 +252,7 @@ export default function Home() {
             }}
             rows={2}
             placeholder="How are you feeling today? It's okay to not be okay…"
-            className="w-full resize-none rounded-xl border border-transparent bg-transparent p-2 text-sm leading-relaxed text-haven-text transition-colors duration-200 placeholder:text-haven-text-muted/70 focus:border-haven-primary focus:outline-none"
+            className="w-full resize-none rounded-xl border border-transparent bg-transparent p-2 text-[15px] leading-relaxed text-haven-text transition-colors duration-200 placeholder:text-haven-text-muted/70 focus:border-haven-primary focus:outline-none"
           />
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2 pl-[52px]">
@@ -255,7 +266,7 @@ export default function Home() {
                 onClick={() => setChip(active ? null : c.label)}
                 aria-pressed={active}
                 className={cn(
-                  'rounded-full border px-3 py-1 text-xs font-medium transition-all duration-200 ease-soft',
+                  'rounded-full border px-3 py-1 text-[13px] font-medium transition-all duration-200 ease-soft',
                   active
                     ? 'border-transparent'
                     : 'border-haven-border bg-white text-haven-text-muted hover:bg-haven-canvas',
@@ -286,13 +297,13 @@ export default function Home() {
             )}
           </button>
         </div>
-        <p className="mt-2 pl-[52px] text-xs text-haven-text-muted">
+        <p className="mt-2 pl-[52px] text-[13px] text-haven-text-muted">
           Posts are anonymous to the community by default.
         </p>
       </motion.section>
 
       {/* 5. Community feed */}
-      <p className="mb-4 text-xs font-medium uppercase tracking-[0.08em] text-haven-text-muted">
+      <p className="mb-4 text-[13px] font-bold uppercase tracking-[0.08em] text-haven-text-muted">
         Community feed
       </p>
       {posts.length === 0 ? (
