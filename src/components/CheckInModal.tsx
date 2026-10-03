@@ -11,9 +11,11 @@ interface CheckInModalProps {
   initialMood?: MoodValue;
   /** Date key to check in for; defaults to today. */
   date?: string;
+  /** Prefill the note field (e.g. from the home check-in strip). */
+  initialNote?: string;
 }
 
-export default function CheckInModal({ open, onOpenChange, initialMood, date }: CheckInModalProps) {
+export default function CheckInModal({ open, onOpenChange, initialMood, date, initialNote }: CheckInModalProps) {
   const dateKey = date ?? todayKey();
   const entries = useMoodEntries();
   const existing = entries[dateKey];
@@ -24,7 +26,7 @@ export default function CheckInModal({ open, onOpenChange, initialMood, date }: 
   useEffect(() => {
     if (open) {
       setSelected(initialMood ?? existing?.mood ?? null);
-      setNote(existing?.note ?? '');
+      setNote(existing?.note ?? initialNote ?? '');
       setSaved(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
