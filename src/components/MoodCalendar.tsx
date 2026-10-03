@@ -114,8 +114,8 @@ export default function MoodCalendar({ compact = false, onSelectDay }: MoodCalen
                 )}
                 style={
                   meta
-                    ? { backgroundColor: `${meta.dot}26`, color: '#22302B' }
-                    : { backgroundColor: '#ECECE6', color: '#6B7770' }
+                    ? { backgroundColor: `${meta.dot}26`, color: '#23223A' }
+                    : { backgroundColor: '#ECECE6', color: '#6E6E88' }
                 }
               >
                 {cell.day}

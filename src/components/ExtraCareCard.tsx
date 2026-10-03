@@ -30,7 +30,7 @@ export default function ExtraCareCard({ onOpenCrisis, onDismiss }: ExtraCareCard
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="relative overflow-hidden rounded-2xl border border-haven-border p-6"
-      style={{ background: 'linear-gradient(135deg, #FDF6EC 0%, #E8F2EC 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #FDF6EC 0%, #EAEAFF 100%)' }}
       aria-label="A little extra care"
     >
       <img
