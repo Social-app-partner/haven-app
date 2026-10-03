@@ -28,7 +28,7 @@ const STATS_KEY = 'haven.profileStats';
 const USER_POSTS_KEY = 'haven.userPosts';
 const SAVED_POSTS_KEY = 'haven.savedPosts';
 
-const AVATAR_COLORS = ['#8B7BC7', '#5BA88A', '#E0A983', '#7FA8C9', '#C98BA0', '#2E7D5B'];
+const AVATAR_COLORS = ['#8B7BC7', '#5BA88A', '#E0A983', '#7FA8C9', '#C98BA0', '#6E6CF0'];
 
 const DEFAULT_PROFILE: ProfileData = {
   name: 'Maya',
@@ -162,10 +162,10 @@ export default function Profile() {
   );
 
   const stats = [
-    { label: 'Days journaled', value: journalEntries.length, icon: BookOpen, color: '#2E7D5B' },
+    { label: 'Days journaled', value: journalEntries.length, icon: BookOpen, color: '#6E6CF0' },
     { label: 'Hugs received', value: hugStats.received, icon: Heart, color: '#C0453B' },
-    { label: 'Hugs given', value: hugStats.given, icon: HeartHandshake, color: '#2E7D5B' },
-    { label: 'Check-ins this month', value: checkInsThisMonth, icon: CalendarCheck, color: '#2E7D5B' },
+    { label: 'Hugs given', value: hugStats.given, icon: HeartHandshake, color: '#6E6CF0' },
+    { label: 'Check-ins this month', value: checkInsThisMonth, icon: CalendarCheck, color: '#6E6CF0' },
   ];
 
   const saveProfile = () => {
@@ -185,7 +185,7 @@ export default function Profile() {
         <motion.div
           className="h-40 rounded-2xl"
           style={{
-            backgroundImage: 'linear-gradient(120deg, #2E7D5B 0%, #4A7FB5 55%, #7B6BB5 100%)',
+            backgroundImage: 'linear-gradient(120deg, #8786FF 0%, #A78BFA 55%, #7BA7F0 100%)',
             backgroundSize: '200% 200%',
           }}
           animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
