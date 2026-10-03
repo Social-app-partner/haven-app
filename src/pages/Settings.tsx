@@ -75,7 +75,7 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: () => void; la
       <span
         aria-live="polite"
         className={cn(
-          'text-[12px] font-medium text-[#2E7D5B] transition-opacity duration-300',
+          'text-[12px] font-medium text-[#6E6CF0] transition-opacity duration-300',
           showSaved ? 'opacity-100' : 'opacity-0',
         )}
       >
@@ -92,7 +92,7 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: () => void; la
         }}
         className={cn(
           'relative h-6 w-11 rounded-full transition-colors duration-200',
-          on ? 'bg-[#2E7D5B]' : 'bg-[#E6E6E0]',
+          on ? 'bg-[#6E6CF0]' : 'bg-[#E7E7F0]',
         )}
       >
         <span
@@ -119,12 +119,12 @@ function ToggleRow({ icon: Icon, label, description, on, onToggle, children }: T
   return (
     <div className="flex items-start justify-between gap-4 py-4 first:pt-0 last:pb-0">
       <div className="flex gap-3">
-        <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E3F0E9]">
-          <Icon className="h-4.5 w-4.5 text-[#2E7D5B]" />
+        <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAEAFF]">
+          <Icon className="h-4.5 w-4.5 text-[#6E6CF0]" />
         </span>
         <div>
-          <p className="text-sm font-semibold text-[#22302B]">{label}</p>
-          <p className="mt-0.5 text-[13px] leading-relaxed text-[#6B7770]">{description}</p>
+          <p className="text-sm font-semibold text-[#23223A]">{label}</p>
+          <p className="mt-0.5 text-[13px] leading-relaxed text-[#6E6E88]">{description}</p>
           {children}
         </div>
       </div>
@@ -139,8 +139,8 @@ function SectionCard({ eyebrow, children, delay }: { eyebrow: string; children: 
       className="mb-6"
       style={{ animation: 'havenRise 350ms cubic-bezier(0.22,1,0.36,1) both', animationDelay: `${delay}ms` }}
     >
-      <p className="mb-2 text-[12px] font-medium uppercase tracking-[0.08em] text-[#6B7770]">{eyebrow}</p>
-      <div className="rounded-2xl border border-[#E6E6E0] bg-white p-5 shadow-[0_1px_3px_rgba(15,46,38,0.06)]">{children}</div>
+      <p className="mb-2 text-[12px] font-medium uppercase tracking-[0.08em] text-[#6E6E88]">{eyebrow}</p>
+      <div className="rounded-2xl border border-[#E7E7F0] bg-white p-5 shadow-[0_1px_3px_rgba(36,35,90,0.06)]">{children}</div>
     </section>
   )
 }
@@ -148,7 +148,7 @@ function SectionCard({ eyebrow, children, delay }: { eyebrow: string; children: 
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F2E26]/40 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#24235A]/40 p-4 backdrop-blur-sm"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -159,7 +159,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
         onClick={(e) => e.stopPropagation()}
         style={{ animation: 'havenRise 250ms cubic-bezier(0.22,1,0.36,1) both' }}
       >
-        <h2 className="text-[18px] font-semibold text-[#22302B]">{title}</h2>
+        <h2 className="text-[18px] font-semibold text-[#23223A]">{title}</h2>
         {children}
       </div>
     </div>
@@ -230,11 +230,11 @@ export default function Settings() {
   }
 
   const selectClass =
-    'rounded-xl border border-[#E6E6E0] bg-white px-2.5 py-1.5 text-sm text-[#22302B] outline-none focus:ring-2 focus:ring-[#2E7D5B]/40'
+    'rounded-xl border border-[#E7E7F0] bg-white px-2.5 py-1.5 text-sm text-[#23223A] outline-none focus:ring-2 focus:ring-[#6E6CF0]/40'
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 pb-16 pt-2">
-      <h1 className="mb-6 text-[26px] font-semibold tracking-[-0.01em] text-[#22302B]">Settings</h1>
+      <h1 className="mb-6 text-[26px] font-semibold tracking-[-0.01em] text-[#23223A]">Settings</h1>
 
       {/* 1. Crisis banner — always first, always still */}
       <div className="mb-10 rounded-2xl border-l-[3px] border-[#A33B32] bg-[#FBEAE8] p-5">
@@ -244,7 +244,7 @@ export default function Settings() {
               <Phone className="h-4.5 w-4.5 shrink-0" />
               If you're in crisis, help is available right now.
             </p>
-            <ul className="mt-3 space-y-1.5 text-sm text-[#22302B]">
+            <ul className="mt-3 space-y-1.5 text-sm text-[#23223A]">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0 text-[#A33B32]" />
                 <span><strong>988 Suicide &amp; Crisis Lifeline</strong> — call or text 988 (US), 24/7</span>
@@ -278,7 +278,7 @@ export default function Settings() {
           on={settings.anonymousMode}
           onToggle={() => update('anonymousMode', !settings.anonymousMode)}
         />
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <ToggleRow
           icon={Lock}
           label="Private journal"
@@ -286,7 +286,7 @@ export default function Settings() {
           on={settings.privateJournal}
           onToggle={() => update('privateJournal', !settings.privateJournal)}
         />
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <ToggleRow
           icon={ShieldAlert}
           label="Content warnings"
@@ -295,32 +295,32 @@ export default function Settings() {
           onToggle={() => update('contentWarnings', !settings.contentWarnings)}
         >
           <div className="group relative mt-2 inline-block">
-            <span className="text-[12px] font-medium text-[#2E7D5B] underline decoration-dotted underline-offset-2">
+            <span className="text-[12px] font-medium text-[#6E6CF0] underline decoration-dotted underline-offset-2">
               Preview how this looks
             </span>
-            <div className="pointer-events-none absolute left-0 top-6 z-10 w-64 rounded-xl border border-[#E6E6E0] bg-white p-3 opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100">
-              <div className="rounded-lg bg-[#F5F5F2] p-3 text-center backdrop-blur">
-                <p className="text-[13px] italic text-[#6B7770] blur-sm select-none">This post is softly hidden to keep you safe.</p>
+            <div className="pointer-events-none absolute left-0 top-6 z-10 w-64 rounded-xl border border-[#E7E7F0] bg-white p-3 opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100">
+              <div className="rounded-lg bg-[#F7F7FB] p-3 text-center backdrop-blur">
+                <p className="text-[13px] italic text-[#6E6E88] blur-sm select-none">This post is softly hidden to keep you safe.</p>
                 <p className="mt-2 text-[12px] font-semibold text-[#8A6B1F]">Sensitive topic — tap to view</p>
               </div>
             </div>
           </div>
         </ToggleRow>
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <div className="flex items-center justify-between gap-4 pt-4">
           <div className="flex gap-3">
-            <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E3F0E9]">
-              <MessageSquareWarning className="h-4.5 w-4.5 text-[#2E7D5B]" />
+            <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAEAFF]">
+              <MessageSquareWarning className="h-4.5 w-4.5 text-[#6E6CF0]" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-[#22302B]">Block &amp; report</p>
-              <p className="mt-0.5 text-[13px] text-[#6B7770]">Review blocked pseudonyms and your report history.</p>
+              <p className="text-sm font-semibold text-[#23223A]">Block &amp; report</p>
+              <p className="mt-0.5 text-[13px] text-[#6E6E88]">Review blocked pseudonyms and your report history.</p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setShowBlocked(true)}
-            className="rounded-full border border-[#E6E6E0] bg-white px-4 py-2 text-sm font-semibold text-[#22302B] transition-colors hover:border-[#2E7D5B]/40 hover:text-[#2E7D5B]"
+            className="rounded-full border border-[#E7E7F0] bg-white px-4 py-2 text-sm font-semibold text-[#23223A] transition-colors hover:border-[#6E6CF0]/40 hover:text-[#6E6CF0]"
           >
             Manage
           </button>
@@ -337,7 +337,7 @@ export default function Settings() {
           onToggle={() => update('dailyReminder', !settings.dailyReminder)}
         >
           {settings.dailyReminder && (
-            <label className="mt-2 inline-flex items-center gap-2 text-[13px] text-[#6B7770]">
+            <label className="mt-2 inline-flex items-center gap-2 text-[13px] text-[#6E6E88]">
               Remind me at
               <input
                 type="time"
@@ -349,7 +349,7 @@ export default function Settings() {
             </label>
           )}
         </ToggleRow>
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <ToggleRow
           icon={Wind}
           label="Grounding exercise alerts"
@@ -357,7 +357,7 @@ export default function Settings() {
           on={settings.groundingAlerts}
           onToggle={() => update('groundingAlerts', !settings.groundingAlerts)}
         />
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <ToggleRow
           icon={Moon}
           label="Quiet hours"
@@ -366,7 +366,7 @@ export default function Settings() {
           onToggle={() => update('quietHours', !settings.quietHours)}
         >
           {settings.quietHours && (
-            <span className="mt-2 inline-flex items-center gap-2 text-[13px] text-[#6B7770]">
+            <span className="mt-2 inline-flex items-center gap-2 text-[13px] text-[#6E6E88]">
               From
               <input type="time" value={settings.quietStart} onChange={(e) => update('quietStart', e.target.value)} className={selectClass} aria-label="Quiet hours start" />
               to
@@ -374,7 +374,7 @@ export default function Settings() {
             </span>
           )}
         </ToggleRow>
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <ToggleRow
           icon={Sparkles}
           label="Weekly wellness summary"
@@ -382,7 +382,7 @@ export default function Settings() {
           on={settings.weeklySummary}
           onToggle={() => update('weeklySummary', !settings.weeklySummary)}
         />
-        <div className="border-t border-[#E6E6E0]" />
+        <div className="border-t border-[#E7E7F0]" />
         <ToggleRow
           icon={HeartHandshake}
           label="Extra-care outreach"
@@ -394,15 +394,15 @@ export default function Settings() {
 
       {/* 4. Data & storage */}
       <SectionCard eyebrow="Data & storage" delay={240}>
-        <p className="text-sm font-semibold text-[#22302B]">Your data lives on this device</p>
-        <p className="mt-1 text-[13px] leading-relaxed text-[#6B7770]">
+        <p className="text-sm font-semibold text-[#23223A]">Your data lives on this device</p>
+        <p className="mt-1 text-[13px] leading-relaxed text-[#6E6E88]">
           Everything you've shared with Haven — moods, journal entries, settings — is stored locally in this browser. Nothing leaves your device.
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={exportData}
-            className="inline-flex items-center gap-2 rounded-full border border-[#E6E6E0] bg-white px-4 py-2 text-sm font-semibold text-[#22302B] transition-colors hover:border-[#2E7D5B]/40 hover:text-[#2E7D5B]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#E7E7F0] bg-white px-4 py-2 text-sm font-semibold text-[#23223A] transition-colors hover:border-[#6E6CF0]/40 hover:text-[#6E6CF0]"
           >
             <Download className="h-4 w-4" /> Export my data
           </button>
@@ -414,8 +414,8 @@ export default function Settings() {
             <Trash2 className="h-4 w-4" /> Delete all my data
           </button>
         </div>
-        {exported && <p className="mt-3 text-[13px] font-medium text-[#2E7D5B]">Your data was downloaded as a JSON file.</p>}
-        {deleted && <p className="mt-3 text-[13px] font-medium text-[#2E7D5B]">All local Haven data has been removed from this device.</p>}
+        {exported && <p className="mt-3 text-[13px] font-medium text-[#6E6CF0]">Your data was downloaded as a JSON file.</p>}
+        {deleted && <p className="mt-3 text-[13px] font-medium text-[#6E6CF0]">All local Haven data has been removed from this device.</p>}
       </SectionCard>
 
       {/* 5. Account */}
@@ -424,7 +424,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => setShowEdit(true)}
-            className="inline-flex items-center gap-2 rounded-full border border-[#E6E6E0] bg-white px-4 py-2 text-sm font-semibold text-[#22302B] transition-colors hover:border-[#2E7D5B]/40 hover:text-[#2E7D5B]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#E7E7F0] bg-white px-4 py-2 text-sm font-semibold text-[#23223A] transition-colors hover:border-[#6E6CF0]/40 hover:text-[#6E6CF0]"
           >
             <PenLine className="h-4 w-4" /> Edit profile
           </button>
@@ -438,14 +438,14 @@ export default function Settings() {
           >
             Sign out
           </button>
-          {signedOut && <span className="text-[13px] text-[#6B7770]">Signing you out gently…</span>}
+          {signedOut && <span className="text-[13px] text-[#6E6E88]">Signing you out gently…</span>}
         </div>
       </SectionCard>
 
       {/* Modals */}
       {showBlocked && (
         <Modal title="Block & report" onClose={() => setShowBlocked(false)}>
-          <p className="mt-2 text-sm leading-relaxed text-[#6B7770]">
+          <p className="mt-2 text-sm leading-relaxed text-[#6E6E88]">
             You haven't blocked anyone — we hope it stays that way. If someone ever makes this space feel unsafe, you can block them from any post or chat, and our moderators review every report with care.
           </p>
           <div className="mt-4 rounded-xl bg-[#FBF3DD] p-3 text-[13px] text-[#8A6B1F]">
@@ -454,7 +454,7 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => setShowBlocked(false)}
-            className="mt-5 rounded-full bg-[#2E7D5B] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#256A4C]"
+            className="mt-5 rounded-full bg-[#6E6CF0] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#5B59D8]"
           >
             Close
           </button>
@@ -463,15 +463,15 @@ export default function Settings() {
 
       {showEdit && (
         <Modal title="Edit profile" onClose={() => setShowEdit(false)}>
-          <p className="mt-2 text-[13px] text-[#6B7770]">Your gentle pseudonym is how the community knows you.</p>
-          <label className="mt-4 block text-sm font-semibold text-[#22302B]">
+          <p className="mt-2 text-[13px] text-[#6E6E88]">Your gentle pseudonym is how the community knows you.</p>
+          <label className="mt-4 block text-sm font-semibold text-[#23223A]">
             Pseudonym
             <input
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               maxLength={32}
-              className="mt-1.5 w-full rounded-xl border border-[#E6E6E0] bg-[#F5F5F2] px-3 py-2.5 text-sm font-normal text-[#22302B] outline-none focus:ring-2 focus:ring-[#2E7D5B]/40"
+              className="mt-1.5 w-full rounded-xl border border-[#E7E7F0] bg-[#F7F7FB] px-3 py-2.5 text-sm font-normal text-[#23223A] outline-none focus:ring-2 focus:ring-[#6E6CF0]/40"
             />
           </label>
           <div className="mt-5 flex gap-3">
@@ -481,14 +481,14 @@ export default function Settings() {
                 localStorage.setItem('haven.profileName', displayName)
                 setShowEdit(false)
               }}
-              className="rounded-full bg-[#2E7D5B] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#256A4C]"
+              className="rounded-full bg-[#6E6CF0] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#5B59D8]"
             >
               Save
             </button>
             <button
               type="button"
               onClick={() => setShowEdit(false)}
-              className="rounded-full border border-[#E6E6E0] px-5 py-2 text-sm font-semibold text-[#22302B] transition-colors hover:border-[#2E7D5B]/40"
+              className="rounded-full border border-[#E7E7F0] px-5 py-2 text-sm font-semibold text-[#23223A] transition-colors hover:border-[#6E6CF0]/40"
             >
               Cancel
             </button>
@@ -498,16 +498,16 @@ export default function Settings() {
 
       {showDelete && (
         <Modal title="Delete all my data" onClose={() => setShowDelete(false)}>
-          <p className="mt-2 text-sm leading-relaxed text-[#6B7770]">
+          <p className="mt-2 text-sm leading-relaxed text-[#6E6E88]">
             This permanently removes every Haven entry on this device — moods, journal entries, saved articles, and settings. There is no undo. If you'd like a copy first, use "Export my data."
           </p>
-          <label className="mt-4 block text-sm font-semibold text-[#22302B]">
+          <label className="mt-4 block text-sm font-semibold text-[#23223A]">
             Type <span className="font-[Fraunces,serif] italic text-[#A33B32]">delete</span> to confirm
             <input
               type="text"
               value={confirmText}
               onChange={(e) => setConfirmText(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-[#E6E6E0] bg-[#F5F5F2] px-3 py-2.5 text-sm font-normal text-[#22302B] outline-none focus:ring-2 focus:ring-[#A33B32]/40"
+              className="mt-1.5 w-full rounded-xl border border-[#E7E7F0] bg-[#F7F7FB] px-3 py-2.5 text-sm font-normal text-[#23223A] outline-none focus:ring-2 focus:ring-[#A33B32]/40"
               autoComplete="off"
             />
           </label>
@@ -526,7 +526,7 @@ export default function Settings() {
                 setShowDelete(false)
                 setConfirmText('')
               }}
-              className="rounded-full border border-[#E6E6E0] px-5 py-2 text-sm font-semibold text-[#22302B] transition-colors hover:border-[#2E7D5B]/40"
+              className="rounded-full border border-[#E7E7F0] px-5 py-2 text-sm font-semibold text-[#23223A] transition-colors hover:border-[#6E6CF0]/40"
             >
               Keep my data
             </button>
