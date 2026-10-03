@@ -38,7 +38,7 @@ export default function Sidebar() {
         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-haven-primary font-serif text-lg font-medium text-white">
           H
         </span>
-        <span className="text-xl font-semibold tracking-tight" style={{ color: '#BFE3D4' }}>
+        <span className="text-xl font-semibold tracking-tight" style={{ color: '#C9C8FF' }}>
           Haven
         </span>
       </NavLink>
@@ -51,7 +51,7 @@ export default function Sidebar() {
               <span
                 className={cn(
                   'relative flex h-10 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors duration-200',
-                  isActive ? 'text-white' : 'text-[#9CC4B4] hover:text-white',
+                  isActive ? 'text-white' : 'text-[#A5A4DC] hover:text-white',
                 )}
               >
                 {isActive && (
@@ -89,7 +89,7 @@ export default function Sidebar() {
       >
         {todayMeta ? (
           <>
-            <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-[#9CC4B4]">
+            <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-[#A5A4DC]">
               Today
             </span>
             <span className="mt-1 flex items-center gap-2 text-sm font-medium text-white">
@@ -99,7 +99,7 @@ export default function Sidebar() {
           </>
         ) : (
           <>
-            <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-[#9CC4B4]">
+            <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-[#A5A4DC]">
               Daily check-in
             </span>
             <span className="mt-1 block font-serif text-[15px] text-white">

@@ -2,27 +2,19 @@ import { Link, useLocation } from 'react-router';
 import { Bell, Search, Sprout } from 'lucide-react';
 import { useMoodStreak } from '@/lib/moodStore';
 
-const TITLES: [RegExp, string][] = [
-  [/^\/$/, 'Home'],
-  [/^\/notifications/, 'Notifications'],
-  [/^\/chats/, 'Chats'],
-  [/^\/journal/, 'My Journal'],
-  [/^\/mood/, 'Mood Tracker'],
-  [/^\/blogs\/.+/, 'Wellness Resources'],
-  [/^\/blogs/, 'Blogs'],
-  [/^\/profile/, 'Profile'],
-  [/^\/settings/, 'Settings'],
-];
-
 export default function Topbar() {
   const { pathname } = useLocation();
-  const title = TITLES.find(([re]) => re.test(pathname))?.[1] ?? 'Haven';
   const streak = useMoodStreak();
   const showStreak = pathname.startsWith('/mood') || pathname.startsWith('/journal');
 
   return (
     <header className="sticky top-0 z-40 flex items-center gap-4 border-b border-haven-border/70 bg-haven-canvas/90 px-8 py-4 backdrop-blur">
-      <h1 className="flex-1 text-[26px] font-semibold tracking-[-0.01em] text-haven-text">{title}</h1>
+      <Link to="/" className="flex flex-1 items-center gap-2.5" aria-label="Haven home">
+        <img src="/logo.svg" alt="" className="h-7 w-7 rounded-lg" />
+        <span className="font-serif text-[24px] font-semibold tracking-[-0.01em] text-haven-text">
+          Haven
+        </span>
+      </Link>
 
       {showStreak && streak > 0 && (
         <span className="flex items-center gap-1.5 rounded-full bg-haven-primary-soft px-3.5 py-1.5 text-[13px] font-medium text-haven-primary">
