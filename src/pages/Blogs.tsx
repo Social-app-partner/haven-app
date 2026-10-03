@@ -36,7 +36,7 @@ function RoleBadge({ role, light }: { role: Article['role']; light?: boolean }) 
         isExpert
           ? light
             ? 'bg-white/20 text-white backdrop-blur-sm'
-            : 'bg-[#E3F0E9] text-[#2E7D5B]'
+            : 'bg-[#EAEAFF] text-[#6E6CF0]'
           : light
             ? 'bg-white/20 text-white backdrop-blur-sm'
             : 'bg-[#E1EEF7] text-[#2F6C9C]',
@@ -58,9 +58,9 @@ function SaveButton({ slug, saved, onToggle }: { slug: string; saved: boolean; o
         e.stopPropagation()
         onToggle(slug)
       }}
-      className="rounded-full p-1.5 text-[#6B7770] transition-colors duration-200 hover:bg-[#E3F0E9] hover:text-[#2E7D5B]"
+      className="rounded-full p-1.5 text-[#6E6E88] transition-colors duration-200 hover:bg-[#EAEAFF] hover:text-[#6E6CF0]"
     >
-      <Bookmark className={cn('h-4.5 w-4.5 transition-colors', saved && 'fill-[#2E7D5B] text-[#2E7D5B]')} />
+      <Bookmark className={cn('h-4.5 w-4.5 transition-colors', saved && 'fill-[#6E6CF0] text-[#6E6CF0]')} />
     </button>
   )
 }
@@ -102,18 +102,18 @@ export default function Blogs() {
     <div className="mx-auto w-full max-w-2xl px-4 pb-16 pt-2">
       {/* Header */}
       <header className="mb-6">
-        <h1 className="text-[26px] font-semibold tracking-[-0.01em] text-[#22302B]">Wellness resources</h1>
-        <p className="mt-1 text-sm leading-[1.6] text-[#6B7770]">
+        <h1 className="text-[26px] font-semibold tracking-[-0.01em] text-[#23223A]">Wellness resources</h1>
+        <p className="mt-1 text-sm leading-[1.6] text-[#6E6E88]">
           Written by mental-health professionals and trained moderators. Take what helps, leave the rest.
         </p>
         <div className="relative mt-4">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6B7770]" />
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6E6E88]" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search topics: anxiety, sleep, grounding…"
-            className="w-full rounded-full border border-[#E6E6E0] bg-white py-2.5 pl-11 pr-4 text-sm text-[#22302B] outline-none transition-shadow placeholder:text-[#6B7770] focus:ring-2 focus:ring-[#2E7D5B]/40"
+            className="w-full rounded-full border border-[#E7E7F0] bg-white py-2.5 pl-11 pr-4 text-sm text-[#23223A] outline-none transition-shadow placeholder:text-[#6E6E88] focus:ring-2 focus:ring-[#6E6CF0]/40"
           />
         </div>
       </header>
@@ -129,8 +129,8 @@ export default function Blogs() {
             className={cn(
               'rounded-full px-3 py-1.5 text-[12px] font-medium tracking-[0.02em] transition-all duration-200',
               topic === t
-                ? 'bg-[#2E7D5B] text-white shadow-sm'
-                : 'border border-[#E6E6E0] bg-white text-[#6B7770] hover:border-[#2E7D5B]/40 hover:text-[#2E7D5B]',
+                ? 'bg-[#6E6CF0] text-white shadow-sm'
+                : 'border border-[#E7E7F0] bg-white text-[#6E6E88] hover:border-[#6E6CF0]/40 hover:text-[#6E6CF0]',
             )}
           >
             {t}
@@ -143,7 +143,7 @@ export default function Blogs() {
         <Link
           to={`/blogs/${featured.slug}`}
           className={cn(
-            'group mb-8 block overflow-hidden rounded-2xl border border-[#E6E6E0] bg-white shadow-[0_1px_3px_rgba(15,46,38,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(15,46,38,0.12)]',
+            'group mb-8 block overflow-hidden rounded-2xl border border-[#E7E7F0] bg-white shadow-[0_1px_3px_rgba(36,35,90,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(36,35,90,0.12)]',
             mounted ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
           )}
           style={{ transitionDuration: '600ms' }}
@@ -157,7 +157,7 @@ export default function Blogs() {
                 mounted ? 'scale-100' : 'scale-105',
               )}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E26]/85 via-[#0F2E26]/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#24235A]/85 via-[#24235A]/30 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-5">
               <div className="mb-2 flex items-center gap-2">
                 <RoleBadge role={featured.role} light />
@@ -177,9 +177,9 @@ export default function Blogs() {
 
       {/* Article grid */}
       {gridArticles.length === 0 ? (
-        <div className="rounded-2xl border border-[#E6E6E0] bg-white p-8 text-center">
-          <p className="font-[Fraunces,serif] text-lg text-[#22302B]">Nothing here just yet.</p>
-          <p className="mt-1 text-sm text-[#6B7770]">Try a different topic or a gentler search — the right words are nearby.</p>
+        <div className="rounded-2xl border border-[#E7E7F0] bg-white p-8 text-center">
+          <p className="font-[Fraunces,serif] text-lg text-[#23223A]">Nothing here just yet.</p>
+          <p className="mt-1 text-sm text-[#6E6E88]">Try a different topic or a gentler search — the right words are nearby.</p>
         </div>
       ) : (
         <div key={`${topic}-${debounced}`} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -187,7 +187,7 @@ export default function Blogs() {
             <Link
               key={a.slug}
               to={`/blogs/${a.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E6E6E0] bg-white shadow-[0_1px_3px_rgba(15,46,38,0.06)] transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_10px_24px_rgba(15,46,38,0.12)]"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E7E7F0] bg-white shadow-[0_1px_3px_rgba(36,35,90,0.06)] transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_10px_24px_rgba(36,35,90,0.12)]"
               style={{
                 animation: `havenRise 350ms cubic-bezier(0.22,1,0.36,1) both`,
                 animationDelay: `${i * 60}ms`,
@@ -209,10 +209,10 @@ export default function Blogs() {
                 <div className="mb-2">
                   <RoleBadge role={a.role} />
                 </div>
-                <h3 className="text-[15px] font-semibold leading-snug text-[#22302B]">{a.title}</h3>
-                <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-[#6B7770]">{a.excerpt}</p>
+                <h3 className="text-[15px] font-semibold leading-snug text-[#23223A]">{a.title}</h3>
+                <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-[#6E6E88]">{a.excerpt}</p>
                 <div className="mt-auto flex items-center justify-between pt-3">
-                  <span className="inline-flex items-center gap-1.5 text-[12px] text-[#6B7770]">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] text-[#6E6E88]">
                     <span
                       className="flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-semibold text-white"
                       style={{ backgroundColor: a.avatarColor }}
