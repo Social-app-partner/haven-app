@@ -6,7 +6,9 @@ import PostCard, { readImageFile, type Post } from '@/components/PostCard';
 import ExtraCareCard, { isCareCardDismissedToday } from '@/components/ExtraCareCard';
 import InspireSection from '@/components/inspire/InspireSection';
 import { useHavenUi } from '@/components/Layout';
-import { MOODS, moodMeta, needsExtraCare, useMoodEntries, useMoodToday, type MoodValue } from '@/lib/moodStore';
+import { MOODS, moodMeta, getConsecutiveLowDays, needsExtraCare, useMoodEntries, useMoodToday, type MoodValue } from '@/lib/moodStore';
+import { createPost, fetchFeed } from '@/lib/feedClient';
+import { buildFeedContext, mapFeedItems, type FeedEntry } from '@/lib/feedStore';
 import { cn } from '@/lib/utils';
 
 const BANNER_KEY = 'haven.homeBannerDismissedSession';
@@ -91,7 +93,8 @@ export default function Home() {
   useMoodEntries();
   const todayEntry = useMoodToday();
   const todayMeta = todayEntry ? moodMeta(todayEntry.mood) : null;
-  const showCareCard = needsExtraCare() && !isCareCardDismissedToday();
+  const [careDismissed, setCareDismissed] = useState(isCareCardDismissedToday);
+  const showCareCard = needsExtraCare() && !careDismissed;
 
   const [bannerVisible, setBannerVisible] = useState(
     () => sessionStorage.getItem(BANNER_KEY) !== '1',
@@ -105,6 +108,30 @@ export default function Home() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [draftImage, setDraftImage] = useState<string | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+
+  /* ---- Backend mood feed (null = offline fallback to local seeds) ---- */
+  const [feedEntries, setFeedEntries] = useState<FeedEntry[] | null>(null);
+  const backendActive = feedEntries !== null;
+  const todayMood = todayEntry?.mood;
+
+  useEffect(() => {
+    let cancelled = false;
+    const ctx = buildFeedContext({
+      userMood: todayMood,
+      consecutiveLowDays: getConsecutiveLowDays(),
+    });
+    fetchFeed(ctx)
+      .then((res) => {
+        if (!cancelled) setFeedEntries(mapFeedItems(res.items));
+      })
+      .catch((err) => {
+        console.warn('[haven] mood-feed backend unreachable — using local feed instead.', err);
+        if (!cancelled) setFeedEntries(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [todayMood]);
 
   const pickDraftImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -125,10 +152,15 @@ export default function Home() {
     });
   };
 
-  const posts = useMemo(
-    () => [...userPosts, ...SEED_POSTS].filter((p) => !hiddenPostIds.includes(p.id)),
-    [userPosts, hiddenPostIds],
-  );
+  const entries = useMemo<FeedEntry[]>(() => {
+    const local: FeedEntry[] = userPosts.map((post) => ({ kind: 'post', post }));
+    const rest: FeedEntry[] = backendActive
+      ? feedEntries
+      : SEED_POSTS.map((post) => ({ kind: 'post', post }));
+    return [...local, ...rest].filter(
+      (e) => e.kind !== 'post' || !hiddenPostIds.includes(e.post.id),
+    );
+  }, [userPosts, feedEntries, backendActive, hiddenPostIds]);
 
   const deletePost = (id: string) => {
     setHiddenPostIds((prev) => [...prev, id]);
@@ -177,6 +209,18 @@ export default function Home() {
       localStorage.setItem(USER_POSTS_KEY, JSON.stringify(next));
     } catch {
       /* image too large to persist — post stays for this session */
+    }
+    // Also send to the backend (fire-and-forget — local copy is the source of truth for the user).
+    if (body) {
+      void createPost({
+        author: 'Me',
+        avatarColor: '#7FA8C9',
+        title: post.title,
+        body,
+        ...(chip ? { moodChip: chip } : {}),
+      }).catch((err) =>
+        console.warn('[haven] could not save post to the backend (kept locally).', err),
+      );
     }
     setText('');
     setChip(null);
@@ -230,10 +274,13 @@ export default function Home() {
       {/* 0. Inspirational top section */}
       {inspireEnabled && <InspireSection />}
 
-      {/* 2. Extra-care card slot */}
-      {showCareCard && (
+      {/* 2. Extra-care card slot (local logic — in backend mode the feed injects it inline) */}
+      {!backendActive && showCareCard && (
         <div className="mb-6">
-          <ExtraCareCard onOpenCrisis={() => openCrisis({ fromCareCard: true })} />
+          <ExtraCareCard
+            onOpenCrisis={() => openCrisis({ fromCareCard: true })}
+            onDismiss={() => setCareDismissed(true)}
+          />
         </div>
       )}
 
@@ -413,8 +460,8 @@ export default function Home() {
         </p>
       </motion.section>
 
-      {/* 5. Feed */}
-      {posts.length === 0 ? (
+      {/* 5. Feed (backend-ranked when reachable; local seeds otherwise) */}
+      {entries.length === 0 ? (
         <div className="flex flex-col items-center rounded-2xl border border-haven-border bg-white px-6 py-12 text-center shadow-card">
           <img src="/empty-feed.svg" alt="" className="w-60" />
           <h3 className="mt-4 font-serif text-xl font-medium text-haven-text">
@@ -426,17 +473,30 @@ export default function Home() {
         </div>
       ) : (
         <div className="space-y-6 pb-12">
-          {posts.map((post, i) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              index={Math.min(i, 8)}
-              onDelete={deletePost}
-              onUpdate={updatePost}
-              autoOpenComments={post.id === focusPost}
-              highlighted={post.id === focusPost}
-            />
-          ))}
+          {entries.map((entry, i) =>
+            entry.kind === 'extra-care-card' ? (
+              // Backend-injected care card (position chosen by the ranker); respects dismissal
+              careDismissed ? null : (
+                <ExtraCareCard
+                  key={`extra-care-${i}`}
+                  onOpenCrisis={() => openCrisis({ fromCareCard: true })}
+                  onDismiss={() => setCareDismissed(true)}
+                />
+              )
+            ) : (
+              <PostCard
+                key={entry.post.id}
+                post={entry.post}
+                index={Math.min(i, 8)}
+                onDelete={deletePost}
+                onUpdate={updatePost}
+                autoOpenComments={entry.post.id === focusPost}
+                highlighted={entry.post.id === focusPost}
+                showCrisisResources={entry.post.crisisResource}
+                onOpenCrisis={() => openCrisis()}
+              />
+            ),
+          )}
         </div>
       )}
     </div>

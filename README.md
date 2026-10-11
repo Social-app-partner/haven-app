@@ -25,6 +25,26 @@ npm run dev     # dev server
 npm run build   # production build -> dist/
 ```
 
+## Backend
+
+The `server/` directory contains the mood-feed backend (Node 20 + TypeScript + Express). It serves a mood-aware, safety-first ranked feed (`POST /api/feed`) and accepts new posts (`POST /api/posts`).
+
+```bash
+cd server
+npm install
+npm run dev      # tsx watch, http://localhost:4000
+# or: npm run build && npm start
+```
+
+The React app calls `http://localhost:4000` by default. To point it elsewhere, set:
+
+```
+# .env.local
+VITE_HAVEN_API_URL=http://localhost:4000
+```
+
+If the backend isn't running, the app automatically falls back to the local seed feed — nothing breaks. See `server/README.md` and `server/INTEGRATION.md` for details.
+
 ## Deploy
 
 It's a static SPA — build with `npm run build` and host `dist/` on any static host (Vercel, Netlify, GitHub Pages...). Make sure the host rewrites all routes to `index.html` (SPA fallback), since the app uses `BrowserRouter`.
