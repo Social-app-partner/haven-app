@@ -17,6 +17,10 @@ export interface Post {
   image?: string;
   hugs: number;
   replies: number;
+  /** Carried through from the backend feed — show the gentle support strip. */
+  crisisResource?: boolean;
+  /** Sensitive-content label, when the post carries a content warning. */
+  contentWarning?: string;
 }
 
 interface PostCardProps {
@@ -28,6 +32,10 @@ interface PostCardProps {
   autoOpenComments?: boolean;
   /** Briefly highlight the card (used when arriving from a notification). */
   highlighted?: boolean;
+  /** When true, render the gentle "support is available" strip below the body. */
+  showCrisisResources?: boolean;
+  /** Optional handler to open the crisis modal (falls back to a static 988 / 741741 line). */
+  onOpenCrisis?: () => void;
 }
 
 export function readImageFile(file: File, onDone: (dataUrl: string) => void) {
@@ -44,7 +52,7 @@ export function readImageFile(file: File, onDone: (dataUrl: string) => void) {
   reader.readAsDataURL(file);
 }
 
-export default function PostCard({ post, index = 0, onDelete, onUpdate, autoOpenComments = false, highlighted = false }: PostCardProps) {
+export default function PostCard({ post, index = 0, onDelete, onUpdate, autoOpenComments = false, highlighted = false, showCrisisResources = false, onOpenCrisis }: PostCardProps) {
   const [hugged, setHugged] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -162,6 +170,14 @@ export default function PostCard({ post, index = 0, onDelete, onUpdate, autoOpen
             {post.moodChip.label}
           </span>
         )}
+        {post.contentWarning && (
+          <span
+            className="shrink-0 rounded-full border border-[#8A6B1F]/25 bg-[#FBF3DD] px-2.5 py-1 text-[11px] font-medium text-[#8A6B1F]"
+            title="This post touches on a sensitive topic"
+          >
+            CW: {post.contentWarning}
+          </span>
+        )}
         <div className="relative shrink-0" ref={menuRef}>
           <button
             type="button"
@@ -259,6 +275,31 @@ export default function PostCard({ post, index = 0, onDelete, onUpdate, autoOpen
             >
               <X size={14} strokeWidth={2} />
             </button>
+          )}
+        </div>
+      )}
+
+      {/* Gentle crisis-resources strip (when the backend flags this post) */}
+      {showCrisisResources && (
+        <div className="mt-3 rounded-xl border border-haven-border bg-haven-canvas p-4">
+          <p className="text-[13px] leading-relaxed text-haven-text-muted">
+            If this resonates heavily with you, support is available — reaching out is strong,
+            never shameful.
+          </p>
+          {onOpenCrisis ? (
+            <button
+              type="button"
+              onClick={onOpenCrisis}
+              className="mt-2.5 rounded-full bg-haven-primary px-4 py-1.5 text-[13px] font-semibold text-white transition-colors hover:bg-haven-primary-hover"
+            >
+              See support options
+            </button>
+          ) : (
+            <p className="mt-2 text-[13px] font-medium text-haven-text">
+              Call or text <span className="font-semibold">988</span> (Suicide &amp; Crisis
+              Lifeline), or text <span className="font-semibold">HOME</span> to{' '}
+              <span className="font-semibold">741741</span>.
+            </p>
           )}
         </div>
       )}
