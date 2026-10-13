@@ -1,0 +1,3 @@
+# Backwards-compatible pointer. For OpenAI paid simulation use:
+# py -3 -m pip install -r requirements-openai.txt
+-r requirements-openai.txt

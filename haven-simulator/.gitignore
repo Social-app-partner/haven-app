@@ -1,0 +1,12 @@
+# Do not commit generated datasets, billing traces or API keys
+output/
+*.env
+.env
+.env.*
+!*.env.example
+api_ledger.jsonl
+paid_run_config.json
+__pycache__/
+*.py[cod]
+.venv/
+venv/
